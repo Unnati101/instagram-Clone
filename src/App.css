@@ -1,0 +1,14 @@
+*{
+  margin:0;
+}
+.app-headerlogo{
+  width: 150px;
+  object-fit:contain;
+   border-bottom: 1px sold lightgray;
+   background-color: white;
+   padding: 10px;
+}
+.App{
+  background-color: #fafafa;
+  height: 100vh;
+}
