@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import logo from './assets/pngegg.png';//25:00
 import './App.css'
 import Post from './Post.jsx';
 import { db } from './firebase.js';
-import { makeStyles } from '@mui/styles';
-import Modal from '@mui/material/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import { Modal } from '@material-ui/core';
+
 
 
 function getModalStyle() {
@@ -32,9 +33,11 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+
   const [modalStyle] = useState(getModalStyle);
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
+
   // {]
   //   username:"unnati",
   //   caption: "I'am making an instagram clone",
@@ -82,7 +85,7 @@ function App() {
           src={logo}
         />
       </div>
-      <h1>Hello let's build a Instagram clone</h1>
+      <h1>Hello let`s build a Instagram clone</h1>
       {
         posts.map(({ id, post }) => (
           <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
