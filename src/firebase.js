@@ -1,4 +1,9 @@
-import firebase from 'firebase';
+import firebase from "firebase/compat/app";
+import 'firebase/compat/firestore';
+import "firebase/compat/auth";
+import "firebase/compat/storage";
+
+
 
 const firebaseApp = firebase.initializeApp({
     apiKey: "AIzaSyDBe94-csKvYBjWjYq8QycRAsNUwhkYTeU",
@@ -9,7 +14,7 @@ const firebaseApp = firebase.initializeApp({
     appId: "1:782732982100:web:0f3aa71951e49d853ebac1",
     measurementId: "G-V6RQ0RWT92"
 });
-  const db=firebaseApp.firestore();
+  const db=firebase.firestore();
   const auth=firebase.auth();
   const storage=firebase.storage();
 
