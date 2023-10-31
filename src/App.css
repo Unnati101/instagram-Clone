@@ -13,3 +13,7 @@
   height: 100vh;
 }
 
+.app_sign{
+  display: flex;
+  flex-direction: column;
+}
