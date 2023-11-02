@@ -91,7 +91,7 @@ function App() {
  const signUp=(event) => {
   event.preventDefault();
   auth
-  .createUserWithEmailPassword(email,password)
+  .createUserWithEmailAndPassword(email,  password)
   .then((authUser)=>{
     return authUser.user.updateProfile
     displayName: username;
@@ -106,7 +106,7 @@ function App() {
 
   event.preventDefault();
   auth
-  .signInWithEmailAndPassword(email,password)
+  .signInWithEmailAndPassword(email,   password)
   .catch((error)=>alert(error.message));
 
   setOpenSignIn(false);
@@ -150,25 +150,27 @@ function App() {
       onClose={()=>setOpenSignIn(false)}
 >
 <div style={modalStyle} className={classes.paper}>
-  <form className="app_signup">
-    <center>
+  <form className="app_sign">
+  <center>
    <img
-   className="app-headerlogo"
-   src={logo}
+       className="app-headerlogo"
+       src={logo}
    />
-    </center>
-    <Input
+              </center>
+              <Input
               placeholder="email"
               type="text"
               value={email}
               onChange={(e)=> setEmail(e.target.value)}
               />
-               <Input
+             
+              <Input
               placeholder="password"
               type="password"
               value={password}
               onChange={(e)=> setPassword(e.target.value)}
               />
+              
                <Button type="submit" onClick={signIn}>Sign In</Button>
 
   </form>
