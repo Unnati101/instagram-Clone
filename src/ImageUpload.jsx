@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Button } from "@material-ui/core";
-import { storage, db } from "./firebase";
+import { storage, db } from "./firebase.js";
 import firebase from "firebase/compat/app";
+import './ImageUpload.css';
 
 function ImageUpload({ username }) {
     const [caption, setCaption] = useState('');
@@ -34,7 +35,7 @@ function ImageUpload({ username }) {
                 //completion function
                 storage
                     .ref("images")
-                    .child("image.name")
+                    .child(image.name)
                     .getDownloadURL()
                     .then(url => {
                         //post images inside db
@@ -57,13 +58,10 @@ function ImageUpload({ username }) {
 
 
     return (
-        <div>
+        <div className="ImageUpload">
 
-            {/* I want to have ...*/}
-            {/*Caption input */}
-            {/*File picker*/}
-            {/*Post button*/}
-            <progress value={progress} max="100" />
+           
+            <progress className="ImageUpload_progress"value={progress} max="100" />
             <input type="text" placeholder='Enter a caption...' onChange={event => setCaption(event.target.value)} value={caption} />
             <input type="file" onChange={handleChange} />
             <Button onClick={handleUpload}>

@@ -113,10 +113,7 @@ function App() {
   }
   return (
     <div className="App">
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName} />
-      ) : (<h3>Log In to upload</h3>)}
-
+     
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -186,29 +183,35 @@ function App() {
           </form>
         </div>
       </Modal>
-      <div>
+        <div className="app-header">
 
         <img
           className="app-headerlogo"
           src={logo}
         />
-      </div>
-      {user ? (
+         {user ? (
         <Button onClick={() => auth.signOut()}>Logout</Button>
-      ) : (
+        ) : (
         <div className="app_loginContainer">
           <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
           <Button onClick={() => setOpen(true)}>Sign Up</Button>
         </div>
-      )}
+        )}
+      </div>
+     
       <h1>Hello let`s build a Instagram clone</h1>
+      
       {
         posts.map(({ id, post }) => (
           <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
         ))
       }
+       {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ) : (<h3>Log In to upload</h3>)}
+
     </div>
   );
 }
 
-export default App
+export default App;
