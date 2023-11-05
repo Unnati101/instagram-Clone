@@ -11,6 +11,7 @@ import ImageUpload from './ImageUpload.jsx';
 
 
 
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -216,5 +217,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;

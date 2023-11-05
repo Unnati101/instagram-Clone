@@ -4,6 +4,9 @@ import { storage, db } from "./firebase.js";
 import firebase from "firebase/compat/app";
 import './ImageUpload.css';
 
+
+
+
 function ImageUpload({ username }) {
     const [caption, setCaption] = useState('');
     const [image, setImage] = useState(null);
@@ -61,7 +64,6 @@ function ImageUpload({ username }) {
 
         );
     };
-
 
     return (
         <div className="ImageUpload">
