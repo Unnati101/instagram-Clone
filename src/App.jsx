@@ -8,6 +8,10 @@ import { Input, Modal } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import ImageUpload from './ImageUpload.jsx';
 
+
+
+
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -113,7 +117,7 @@ function App() {
   }
   return (
     <div className="App">
-     
+
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -183,35 +187,37 @@ function App() {
           </form>
         </div>
       </Modal>
-        <div className="app-header">
+      <div className="app-header">
 
         <img
           className="app-headerlogo"
           src={logo}
         />
-         {user ? (
-        <Button onClick={() => auth.signOut()}>Logout</Button>
+        {user ? (
+          <Button onClick={() => auth.signOut()}>Logout</Button>
         ) : (
-        <div className="app_loginContainer">
-          <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-          <Button onClick={() => setOpen(true)}>Sign Up</Button>
-        </div>
+          <div className="app_loginContainer">
+            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+          </div>
         )}
       </div>
-     
+
       <h1>Hello let`s build a Instagram clone</h1>
-      
+
       {
         posts.map(({ id, post }) => (
           <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
         ))
       }
-       {user?.displayName ? (
+      {user?.displayName ? (
         <ImageUpload username={user.displayName} />
       ) : (<h3>Log In to upload</h3>)}
 
     </div>
   );
 }
+
+
 
 export default App;

@@ -4,6 +4,9 @@ import { storage, db } from "./firebase.js";
 import firebase from "firebase/compat/app";
 import './ImageUpload.css';
 
+
+
+
 function ImageUpload({ username }) {
     const [caption, setCaption] = useState('');
     const [image, setImage] = useState(null);
@@ -16,35 +19,41 @@ function ImageUpload({ username }) {
         }
     };
     const handleUpload = () => {
+        // This is what uploads the image to Firebase
         const uploadTask = storage.ref(`images/${image.name}`).put(image);
+
         uploadTask.on(
             "state_changed",
             (snapshot) => {
-                //progress function...
+                // progress function
                 const progress = Math.round(
                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                 );
-                setProgress(progress);
+                setProgress(progress)
             },
             (error) => {
-                //error function
+                // Error function
                 console.log(error);
                 alert(error.message);
             },
             () => {
-                //completion function
+                //complete function ...
                 storage
                     .ref("images")
                     .child(image.name)
                     .getDownloadURL()
                     .then(url => {
-                        //post images inside db
+                        // Post image URL inside db
                         db.collection("posts").add({
+                            //timestamp is used here to figure out the time the image was uploaded, which is gonna determine the order in which we display the posts (latest at the top)
                             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                             caption: caption,
                             imageUrl: url,
-                            username: username
+                            username: username,
+                            imagename: image.name
                         });
+
+                        // Reset everything once upload process is completed
                         setProgress(0);
                         setCaption("");
                         setImage(null);
@@ -56,12 +65,11 @@ function ImageUpload({ username }) {
         );
     };
 
-
     return (
         <div className="ImageUpload">
 
-           
-            <progress className="ImageUpload_progress"value={progress} max="100" />
+
+            <progress className="ImageUpload_progress" value={progress} max="100" />
             <input type="text" placeholder='Enter a caption...' onChange={event => setCaption(event.target.value)} value={caption} />
             <input type="file" onChange={handleChange} />
             <Button onClick={handleUpload}>
