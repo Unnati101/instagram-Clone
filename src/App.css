@@ -16,6 +16,9 @@
   height: 100vh;
 }
 .app-header{
+  position: sticky;
+  top: 0;
+  z-index: 1;
   display: flex;
   background-color: white;
   object-fit: contain;
@@ -24,7 +27,24 @@
   justify-content: space-between;
   margin-bottom: 10px;
 }
+
+.app_posts{
+  padding: 20px;
+
+
+
+
+}
 .app_sign{
   display: flex;
   flex-direction: column;
+}
+.postbody{
+  display: flex;
+  margin-left: 280px;
+}
+.embed-post{
+  margin-bottom: 30px;
+  margin-top: 19px;
+  
 }

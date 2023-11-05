@@ -3,6 +3,7 @@
     background-color: white;
     border: 1px solid lightgray;
     margin-bottom: 45px ;
+    border-radius: 4px;
 }
 .Post_img{
     width:100%;
@@ -21,4 +22,28 @@
 }
 .Post_avatar{
     margin-right:10px;
+}
+.post_commentBox{
+    display: flex;
+    margin-top: 10px;
+}
+
+.post_input{
+    flex: 1;
+    border: none;
+    padding: 10px;
+    border-top: 1px solid  lightgray;
+
+}
+
+.post_button{
+    flex: 0;
+    border: none;
+    color: #6082a3;
+    background-color: transparent;
+    border-top: 1px solid lightgray;
+}
+
+.post_comments{
+    padding: 20px;
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import logo from './assets/pngegg.png';//25:00
+import logo from './assets/pngegg.png';
 import './App.css'
 import Post from './Post.jsx';
 import { auth, db } from './firebase.js';
@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Input, Modal } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import ImageUpload from './ImageUpload.jsx';
+import  {InstagramEmbed } from 'react-social-media-embed';
+
 
 
 
@@ -203,13 +205,37 @@ function App() {
         )}
       </div>
 
-      <h1>Hello let`s build a Instagram clone</h1>
-
-      {
+<div className="postbody">
+<div className="app_posts">
+ {
         posts.map(({ id, post }) => (
-          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+          <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
         ))
       }
+  
+ </div>
+ <div >
+ <InstagramEmbed
+ className="embed-post"
+  url='https://www.instagram.com/p/CUbHfhpswxt/'
+     maxWidth={320}
+  
+/>
+
+<InstagramEmbed
+className="embed-post"
+  url='https://www.instagram.com/p/Cx9dXoMOId2/'
+  
+     maxWidth={320}
+  
+/>
+ </div>
+
+
+</div>
+
+
+      
       {user?.displayName ? (
         <ImageUpload username={user.displayName} />
       ) : (<h3>Log In to upload</h3>)}
