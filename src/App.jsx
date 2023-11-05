@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react';
-import logo from './assets/pngegg.png';//25:00
+import logo from './assets/pngegg.png';
 import './App.css'
 import Post from './Post.jsx';
 import { auth, db } from './firebase.js';
 import { makeStyles } from '@material-ui/core/styles';
 import { Input, Modal } from '@material-ui/core';
 import { Button } from '@material-ui/core';
+import ImageUpload from './ImageUpload.jsx';
+import  {InstagramEmbed } from 'react-social-media-embed';
+
+
+
+
 
 
 function getModalStyle() {
@@ -37,31 +43,31 @@ function App() {
   const [modalStyle] = useState(getModalStyle);
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
-  const [openSignIn, setOpenSignIn] =useState(false);
+  const [openSignIn, setOpenSignIn] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser]=useState(null);
+  const [user, setUser] = useState(null);
 
-  useEffect(()=>{
-  const unsubscribe=auth.onAuthStateChanged((authUser)=>{
-      if(authUser){
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
         //user has logged in...
         console.log(authUser);
         setUser(authUser);
-        
-       
-      }else{
+
+
+      } else {
         setUser(null);
       }
     })
-    return ()=>{
+    return () => {
       //perform some cleanup actions
       unsubscribe();
     }
-  },[user, username]);
+  }, [user, username]);
 
- 
+
   // {]
   //   username:"unnati",
   //   caption: "I'am making an instagram clone",
@@ -88,31 +94,32 @@ function App() {
     })
   }, []);
 
- const signUp=(event) => {
-  event.preventDefault();
-  auth
-  .createUserWithEmailAndPassword(email,  password)
-  .then((authUser)=>{
-    return authUser.user.updateProfile
-    displayName: username;
-  })
- 
+  const signUp = (event) => {
+    event.preventDefault();
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        return authUser.user.updateProfile({
+          displayName: username
+        })
 
-  .catch((error)=>alert(error.message));
-  setOpen(false);
- }
+      })
+      .catch((error) => alert(error.message));
+    setOpen(false);
+  }
 
- const signIn=(event)=>{
+  const signIn = (event) => {
 
-  event.preventDefault();
-  auth
-  .signInWithEmailAndPassword(email,   password)
-  .catch((error)=>alert(error.message));
+    event.preventDefault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => alert(error.message));
 
-  setOpenSignIn(false);
- }
+    setOpenSignIn(false);
+  }
   return (
     <div className="App">
+
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -120,85 +127,123 @@ function App() {
       >
         <div style={modalStyle} className={classes.paper}>
           <form className="app_sign">
-          <center>
-            <img
-              className="app-headerlogo"
-              src={logo}
+            <center>
+              <img
+                className="app-headerlogo"
+                src={logo}
               />
-              </center>
-              <Input
+            </center>
+            <Input
+              placeholder="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
               placeholder="email"
               type="text"
               value={email}
-              onChange={(e)=> setEmail(e.target.value)}
-              />
-               <Input
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
               placeholder="password"
               type="password"
               value={password}
-              onChange={(e)=> setPassword(e.target.value)}
-              />
-              <Button type="submit" onClick={signUp}>Sign Up</Button>
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" onClick={signUp}>Sign Up</Button>
           </form>
-         
-          
+
+
         </div>
 
       </Modal>
       <Modal
-      open={openSignIn}
-      onClose={()=>setOpenSignIn(false)}
->
-<div style={modalStyle} className={classes.paper}>
-  <form className="app_sign">
-  <center>
-   <img
-       className="app-headerlogo"
-       src={logo}
-   />
-              </center>
-              <Input
+        open={openSignIn}
+        onClose={() => setOpenSignIn(false)}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <form className="app_sign">
+            <center>
+              <img
+                className="app-headerlogo"
+                src={logo}
+              />
+            </center>
+            <Input
               placeholder="email"
               type="text"
               value={email}
-              onChange={(e)=> setEmail(e.target.value)}
-              />
-             
-              <Input
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <Input
               placeholder="password"
               type="password"
               value={password}
-              onChange={(e)=> setPassword(e.target.value)}
-              />
-              
-               <Button type="submit" onClick={signIn}>Sign In</Button>
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-  </form>
-  </div>
-  </Modal>
-<div>
-    
+            <Button type="submit" onClick={signIn}>Sign In</Button>
+
+          </form>
+        </div>
+      </Modal>
+      <div className="app-header">
+
         <img
           className="app-headerlogo"
           src={logo}
         />
+        {user ? (
+          <Button onClick={() => auth.signOut()}>Logout</Button>
+        ) : (
+          <div className="app_loginContainer">
+            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+          </div>
+        )}
       </div>
-      {user?(
-        <Button onClick={()=>auth.signOut()}>Logout</Button>
-      ):(
-        <div className="app_loginContainer">
-          <Button onClick={()=>setOpenSignIn(true)}>Sign In</Button>
-          <Button onClick={() => setOpen(true)}>Sign Up</Button>
-</div>
-      )}
-      <h1>Hello let`s build a Instagram clone</h1>
-      {
+
+<div className="postbody">
+<div className="app_posts">
+ {
         posts.map(({ id, post }) => (
-          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+          <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
         ))
       }
+  
+ </div>
+ <div >
+ <InstagramEmbed
+ className="embed-post"
+  url='https://www.instagram.com/p/CUbHfhpswxt/'
+     maxWidth={320}
+  
+/>
+
+<InstagramEmbed
+className="embed-post"
+  url='https://www.instagram.com/p/Cx9dXoMOId2/'
+  
+     maxWidth={320}
+  
+/>
+ </div>
+
+
+</div>
+
+
+      
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ) : (<h3>Log In to upload</h3>)}
+
     </div>
   );
 }
 
-export default App
+
+
+export default App;
